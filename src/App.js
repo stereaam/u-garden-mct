@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import Home from "./pages/home/Home";
+import View from "./pages/view/View";
+import Tools from "./pages/tools/Tools";
+import Help from "./pages/help/Help";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const { t } = useTranslation();
+	const viewPath = `/${t("view")}`;
+	const toolsPath = `/${t("tools")}`;
+	const helpPath = `/${t("help")}`;
+	return (
+		<div className="App">
+			<Routes>
+				<Route path="/" exact element={<Home />} />
+				<Route path={viewPath} element={<View />} />
+				<Route path={toolsPath} element={<Tools />} />
+				<Route path={helpPath} element={<Help />} />
+				 <Route path="*" element={<Navigate to="/" />} />
+			</Routes>
+		</div>
+	);
 }
 
 export default App;

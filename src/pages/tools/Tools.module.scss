@@ -1,0 +1,30 @@
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.innerContainer {
+  display: flex;
+  margin: 40px;
+  width: 80%;
+  justify-content: space-between;
+  height: 950px;
+  align-items: flex-start;
+}
+
+.leftColumn {
+  width: 60%;
+  padding-bottom: 30px;
+}
+
+.rightColumn {
+  width: 35%;
+  height: 100%;
+}

@@ -1,0 +1,39 @@
+.draggableItem {
+	background-color: #808080;
+	color: #fff;
+	padding: 8px;
+	border-radius: 4px;
+	cursor: grab;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	margin-top: 10px;
+}
+
+.dropBoxWrapper {
+	width: 30%;
+	text-align: center;
+}
+
+.dropBox {
+	border: 1px solid #ddd;
+	padding: 5px;
+	border-radius: 8px;
+	height: 300px;
+}
+
+.draggablesWrapper {
+	display: flex;
+	flex-flow: wrap;
+	gap: 5px;
+	margin-bottom: 10px;
+}
+
+.listItem {
+	margin-bottom: 8px;
+	border-radius: 8px;
+}
+
+.boxesContainer {
+	display: flex;
+	flex-flow: wrap;
+	justify-content: space-between;
+}
