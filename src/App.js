@@ -10,17 +10,17 @@ import "./App.css";
 
 function App() {
 	const { t } = useTranslation();
-	const viewPath = `/${t("view")}`;
-	const toolsPath = `/${t("tools")}`;
-	const helpPath = `/${t("help")}`;
+	const viewPath = `/u-garden-mct/${t("view")}`;
+	const toolsPath = `/u-garden-mct/${t("tools")}`;
+	const helpPath = `/u-garden-mct/${t("help")}`;
 	return (
 		<div className="App">
 			<Routes>
-				<Route path="/" exact element={<Home />} />
+				<Route path="/u-garden-mct/" exact element={<Home />} />
 				<Route path={viewPath} element={<View />} />
 				<Route path={toolsPath} element={<Tools />} />
 				<Route path={helpPath} element={<Help />} />
-				 <Route path="*" element={<Navigate to="/" />} />
+				 <Route path="*" element={<Navigate to="/u-garden-mct" />} />
 			</Routes>
 		</div>
 	);

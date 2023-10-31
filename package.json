@@ -1,7 +1,7 @@
 {
 	"name": "ui",
 	"version": "0.1.0",
-	"homepage": "https://stereaam.github.io/",
+	"homepage": "https://stereaam.github.io/u-garden-mct/",
 	"private": true,
 	"dependencies": {
 		"@emotion/react": "^11.11.1",
