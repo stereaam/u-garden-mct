@@ -76,7 +76,8 @@ function FilterableTable({ variables, setVariables }) {
 								<TableCell sx={{width: '250px'}}>
 									<ToggleButton
 										variableName={item.name}
-										setVariables={setFilteredData}
+										variables={variables}
+										setVariables={setVariables}
 										className="filterable-toggle-button"
 										sx={{ m: 1 }}
 									/>

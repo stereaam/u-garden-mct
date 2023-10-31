@@ -50,35 +50,39 @@ function SortableTable({ parsedCategoryValues }) {
 
 	return (
 		<TableContainer component={Paper} sx={{ height: "100%" }}>
-			<Table stickyHeader sx={{ height: "100%" }}>
-				<TableHead>
-					<TableRow>
-						{columns.map((column) => (
-							<TableCell
-								sx={{ fontWeight: "bold", fontSize: "17px" }}
-								key={column.id}
-							>
-								<TableSortLabel
-									active={orderBy === column.id}
-									direction={orderBy === column.id ? order : "asc"}
-									onClick={() => handleSort(column.id)}
-								>
-									{column.label}
-								</TableSortLabel>
-							</TableCell>
-						))}
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{sortedData.map((row, index) => (
-						<TableRow key={index}>
+			<div style={{ height: "100%" }}>
+				<Table stickyHeader>
+					<TableHead>
+						<TableRow>
 							{columns.map((column) => (
-								<TableCell key={column.id}>{row[column.id]}</TableCell>
+								<TableCell
+									sx={{ fontWeight: "bold", fontSize: "17px" }}
+									key={column.id}
+								>
+									<TableSortLabel
+										active={orderBy === column.id}
+										direction={orderBy === column.id ? order : "asc"}
+										onClick={() => handleSort(column.id)}
+									>
+										{column.label}
+									</TableSortLabel>
+								</TableCell>
 							))}
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
+					</TableHead>
+					<TableBody>
+						{sortedData.map((row, index) => (
+							<TableRow key={index}>
+								{columns.map((column) => (
+									<TableCell key={column.id}>
+										{row[column.id]}
+									</TableCell>
+								))}
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</div>
 		</TableContainer>
 	);
 }

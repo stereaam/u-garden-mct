@@ -5,10 +5,12 @@ import FilterableTable from "./components/filterable-table/FilterableTable";
 import DataTable from "./components/data-table/DataTable";
 import { useSelector } from "react-redux";
 import styles from "./Tools.module.scss";
-import { useEffect } from "react";
 
 function Tools() {
 	const jsonData = useSelector((state) => state.jsonData)[0]?.data || {};
+	const initialCategoryItems = useSelector((state) => state.categoryItems);
+	const [categoryItems, setCategoryItems] = useState(initialCategoryItems);
+
 	const variableNames = Object.keys(jsonData);
 	const initialVariables =
 		variableNames.length > 0
@@ -20,7 +22,7 @@ function Tools() {
 			  }))
 			: [];
 	const [variables, setVariables] = useState(initialVariables);
-			
+	
 	return (
 		<div>
 			<Header />
@@ -33,12 +35,15 @@ function Tools() {
 						<VariablesAssigner
 							variables={variables}
 							setVariables={setVariables}
+							categoryItems={categoryItems}
+							setCategoryItems={setCategoryItems}
 						/>
 					</div>
 					<div className={styles.rightColumn}>
 						<FilterableTable
 							variables={variables}
 							setVariables={setVariables}
+							categoryItems={categoryItems}
 						/>
 					</div>
 				</div>

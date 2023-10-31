@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 
-function ToggleButton({ variableName, setVariables }) {
+function ToggleButton({ variableName, variables, setVariables }) {
 	const [isActive, setIsActive] = useState(false);
 
 	const handleToggle = () => {
@@ -9,13 +9,14 @@ function ToggleButton({ variableName, setVariables }) {
 	};
 
 	useEffect(() => {
-		setVariables((prev) =>
-			prev.map((item) =>
-				item.name === variableName ? { ...item, inverted: isActive } : item
-			)
-		);
-	}, [isActive, setVariables, variableName]);
-
+		const parsedVariables = variables.map((item) => {
+			return item.name === variableName
+				? { ...item, inverted: isActive }
+				: item;
+		});
+		setVariables(parsedVariables);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isActive]);
 	return (
 		<Button
 			variant={isActive ? "contained" : "outlined"}

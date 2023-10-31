@@ -94,11 +94,9 @@ const DropBox = ({
 	);
 };
 
-const VariablesAssigner = ({ variables, setVariables }) => {
+const VariablesAssigner = ({ variables, setVariables, categoryItems, setCategoryItems }) => {
 	const dispatch = useDispatch();
-	const initialCategoryItems = useSelector((state) => state.categoryItems);
-	const [categoryItems, setCategoryItems] = useState(initialCategoryItems);
-
+	
 	const handleDrop = (boxTitle, droppedItem) => {
 		setVariables(
 			variables.map((item) =>
