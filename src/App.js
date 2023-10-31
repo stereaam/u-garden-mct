@@ -20,7 +20,7 @@ function App() {
 				<Route path={viewPath} element={<View />} />
 				<Route path={toolsPath} element={<Tools />} />
 				<Route path={helpPath} element={<Help />} />
-				 <Route path="*" element={<Navigate to="/u-garden-mct" />} />
+				<Route path="*" element={<Navigate to="/u-garden-mct" />} />
 			</Routes>
 		</div>
 	);

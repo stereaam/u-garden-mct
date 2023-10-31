@@ -60,8 +60,8 @@ function Header() {
 							<Link
 								to={
 									item === t("home")
-										? "/"
-										: "/" + item.toLowerCase()
+										? "/u-garden-mct/"
+										: "/u-garden-mct/" + item.toLowerCase()
 								}
 							>
 								<Button key={item} sx={{ color: "#fff" }}>
