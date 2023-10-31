@@ -1,0 +1,17 @@
+
+.homeContent {
+	height: 90vh;
+	display: flex;
+	align-items: center;
+    justify-content: center;
+}
+.homeContent > div {
+	display: flex;
+	flex-direction: column;
+    row-gap: 20px;
+}
+
+.importButton{
+    width: 350px;
+    height: 70px;
+}

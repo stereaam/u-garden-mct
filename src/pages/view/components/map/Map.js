@@ -1,13 +1,12 @@
 import { MapContainer, TileLayer, Popup, useMap, Polygon } from "react-leaflet";
 import React, { useState, useEffect } from "react";
+import styles from './Map.module.scss'
 import "leaflet/dist/leaflet.css";
-
 
 function getColorForValue(value) {
 	value = Math.min(1, Math.max(0, value));
 	const hue = (1 - value) * 120;
 	const color = `hsl(${hue}, 100%, 50%)`;
-	console.log("color", color);
 	return color;
 }
 
@@ -16,8 +15,6 @@ export default function Map({
 	display_name,
 	mapProvider,
 	jsonData,
-	categoryValues,
-	sliderValues,
 	parsedData,
 	...props
 }) {
@@ -29,7 +26,6 @@ export default function Map({
 		CARTODB_LIGHT: "cartodb_light",
 		CARTODB_DARK: "cartodb_dark",
 	};
-
 	const MAP_PROVIDERS = {
 		[MAP_PROVIDERS_LEGEND.OPEN_STREET_MAP]:
 			"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -55,14 +51,14 @@ export default function Map({
 
 	return (
 		<MapContainer
-			style={{ height: "100%", border: '2px solid gray' }}
+			style={{ height: "100%", border: "2px solid gray" }}
 			center={[latitude, longitude]}
 			zoom={12}
 			scrollWheelZoom={true}
 		>
 			<TileLayer url={MAP_PROVIDERS[mapProvider]} attribution="" />;
 			<MapView />
-			{parsedData.map((item, index) => {
+			{jsonData.map((item, index) => {
 				return (
 					<Polygon
 						positions={item.coordinates}
@@ -74,24 +70,27 @@ export default function Map({
 					>
 						<Popup>
 							<div>
-								<strong>Area Information</strong>
+								<div className={styles.zoneName}>{item.name}</div>
+								<strong>Size: </strong> {item.data.size} m<sup>2</sup>
 								<br />
-								Size: {jsonData[index].size} m<sup>2</sup>
+								<strong>Soil quality: </strong> {item.data.soilQuality}
 								<br />
-								Soil quality: {item.soilQuality}
+								<strong>Elder People: </strong> {item.data.elderPeoplePercentage}%,
 								<br />
-								Elder People: {item.elderPeoplePercentage.toFixed(2)} %,
+								<strong>Employed People: </strong>
+								{item.data.employedPeoplePercentage}%,
 								<br />
-								Employed People:{item.employedPeoplePercentage.toFixed(2)} %,
+								<strong>Budget: </strong>
+								${item.data.budget},
 								<br />
-								Budget:{item.budget},
+								<strong>Plant Species: </strong>
+								{item.data.plantSpecies},
 								<br />
-								Plant Species:{item.plantSpecies},
+								<strong>Interested Residents: </strong>
+								{item.data.interestedResidentsPercentage}%,
 								<br />
-								Interested Residents:{" "}
-								{item.interestedResidentsPercentage.toFixed(2)} %,
-								<br />
-								Shape Index:{item.shapeIndex},
+								<strong>Shape Index: </strong>
+								{item.data.shapeIndex}
 							</div>
 						</Popup>
 					</Polygon>

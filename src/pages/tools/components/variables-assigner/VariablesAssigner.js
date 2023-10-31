@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { Box, List, ListItem, ListItemText, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import styles from "./VariablesAssigner.module.scss";
-
+import { useSelector, useDispatch } from "react-redux";
+import { updateCategoryItems } from "../../../../redux/actions/actions";
 function camelCaseToWords(camelCaseString) {
 	const words = camelCaseString.split(/(?=[A-Z])/);
 
@@ -94,14 +95,9 @@ const DropBox = ({
 };
 
 const VariablesAssigner = ({ variables, setVariables }) => {
-	const [categoryItems, setCategoryItems] = useState({
-		urban: [],
-		spatial: [],
-		environmental: [],
-		economic: [],
-		politic: [],
-		social: [],
-	});
+	const dispatch = useDispatch();
+	const initialCategoryItems = useSelector((state) => state.categoryItems);
+	const [categoryItems, setCategoryItems] = useState(initialCategoryItems);
 
 	const handleDrop = (boxTitle, droppedItem) => {
 		setVariables(
@@ -113,6 +109,10 @@ const VariablesAssigner = ({ variables, setVariables }) => {
 			return { ...prev, [boxTitle]: [...prev[boxTitle], droppedItem] };
 		});
 	};
+
+	useEffect(() => {
+		dispatch(updateCategoryItems(categoryItems));
+	}, [categoryItems, dispatch]);
 
 	return (
 		<div>

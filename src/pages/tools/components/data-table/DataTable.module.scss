@@ -3,35 +3,35 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+    width: 100%;
 }
 
 .filterContainer {
-    width: 90%;
 	margin-bottom: 20px;
 	display: flex;
-	flex-direction: column
+	flex-direction: column;
 }
 
 .filterInput {
-    width: 100%;
+	width: 100%;
 	display: flex;
-    align-items: center;
-    gap: 50px;
+	align-items: center;
+	gap: 50px;
 }
 
 .filterBox {
 	width: 100%;
 	min-height: 50px;
 	display: flex;
-    flex-wrap: wrap;
+	flex-wrap: wrap;
 	gap: 5px;
 }
 
 .filterBoxItem {
 	box-shadow: 1px 1px 1px black;
 	border-radius: 5px;
-	background-color:#1976d2;
-    color: white;
+	background-color: #1976d2;
+	color: white;
 	min-width: 50px;
 	display: flex;
 	justify-content: center;
@@ -43,8 +43,8 @@
 .tablePaper {
     width: 90%;
 }
-.tableContainer{
-    height: 500px;
+.tableContainer {
+	height: 500px;
 }
 
 .tableHeadCell {

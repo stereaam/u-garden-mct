@@ -7,82 +7,90 @@ import {
 	TableHead,
 	TableRow,
 	Paper,
-	TextField,
 	Button,
+	Typography,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import "./DataTable.css";
+import styles from "./DataTable.module.scss";
+import { useDispatch } from "react-redux";
+import { updateJsonData } from '../../../../redux/actions/actions';
+
 function camelCaseToTitleCase(camelCase) {
-	// Use a regular expression to find and replace capital letters with a space and the lowercase letter
 	const withSpaces = camelCase.replace(/([A-Z])/g, " $1").trim();
-	// Capitalize the first letter and return the result
 	return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
 }
 
-function validateInput(input) {
-	// Define a regular expression pattern to match the format "test=test2"
-	const pattern = /^[A-Za-z0-9_-]+=[A-Za-z0-9_-]+$/;
+// function validateInput(input) {
+// 	// Define a regular expression pattern to match the format "test=test2"
+// 	const pattern = /^[A-Za-z0-9_-]+=[A-Za-z0-9_-]+$/;
 
-	// Use the test() method to check if the input matches the pattern
-	return pattern.test(input);
-}
+// 	// Use the test() method to check if the input matches the pattern
+// 	return pattern.test(input);
+// }
 
 function DataTable() {
+	const dispatch = useDispatch();
 	const [data, setData] = useState(useSelector((state) => state.jsonData));
-	const [savedFilters, setSavedFilter] = useState([]);
-	const [filter, setFilter] = useState("");
-	const [filteredData, setFilteredData] = useState([...data]);
-	const [errorMessage, setErrorMessage] = useState("");
-
-	const filterInputRef = useRef(null);
-
-	function filterData(data, filters) {
-		const filteredData = data.filter((item) => {
-			return filters.every((filter) => {
-				const [property, value] = filter.split("=");
-				console.log(property, value);
-				const numericValue = !isNaN(Number(value)) ? Number(value) : value;
-				return item[property] === numericValue;
-			});
-		});
-		setFilteredData(filteredData);
-	}
-
-	const handleFilterChange = (event) => {
-		const filterValue = event.target.value;
-		setFilter(filterValue);
+	const handleDelete = (name) => {
+		const filtereData = data.filter((item) => item.name !== name);
+		setData(filtereData);
+		dispatch(updateJsonData(filtereData));
 	};
+	// const [savedFilters, setSavedFilter] = useState([]);
+	// const [filter, setFilter] = useState("");
+	// const [filteredData, setFilteredData] = useState([...data]);
+	// const [errorMessage, setErrorMessage] = useState("");
 
-	const saveFilter = () => {
-		if (validateInput(filter)) {
-			setSavedFilter([...savedFilters, filter]);
-			setFilter("");
-			setErrorMessage("");
-		} else {
-			setErrorMessage('Invalid filter. Ex: "Size=10000"');
-		}
-	};
+	// const filterInputRef = useRef(null);
 
-	const handleClearFilter = () => {
-		setFilter("");
-		setSavedFilter([]);
-		setFilteredData(data);
-		filterInputRef.current.focus(); // Maintain focus on the input after clearing
-	};
+	// function filterData(data, filters) {
+	// 	const filteredData = data.filter((item) => {
+	// 		return filters.every((filter) => {
+	// 			const [property, value] = filter.split("=");
+	// 			console.log(property, value);
+	// 			const numericValue = !isNaN(Number(value)) ? Number(value) : value;
+	// 			return item[property] === numericValue;
+	// 		});
+	// 	});
+	// 	setFilteredData(filteredData);
+	// }
 
-	const handleKeyPress = (event) => {
-		if (event.key === "Enter") {
-			event.preventDefault(); // Prevent form submission
-			saveFilter();
-			filterInputRef.current.focus(); // Maintain focus on the input after pressing Enter
-		}
-	};
-	useEffect(() => {
-		filterData(data, savedFilters);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [savedFilters]);
+	// const handleFilterChange = (event) => {
+	// 	const filterValue = event.target.value;
+	// 	setFilter(filterValue);
+	// };
+
+	// const saveFilter = () => {
+	// 	if (validateInput(filter)) {
+	// 		setSavedFilter([...savedFilters, filter]);
+	// 		setFilter("");
+	// 		setErrorMessage("");
+	// 	} else {
+	// 		setErrorMessage('Invalid filter. Ex: "Size=10000"');
+	// 	}
+	// };
+
+	// const handleClearFilter = () => {
+	// 	setFilter("");
+	// 	setSavedFilter([]);
+	// 	setFilteredData(data);
+	// 	filterInputRef.current.focus(); // Maintain focus on the input after clearing
+	// };
+
+	// const handleKeyPress = (event) => {
+	// 	if (event.key === "Enter") {
+	// 		event.preventDefault(); // Prevent form submission
+	// 		saveFilter();
+	// 		filterInputRef.current.focus(); // Maintain focus on the input after pressing Enter
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	filterData(data, savedFilters);
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [savedFilters]);
 	return (
-		<div className="dataTableContainer">
+		<div className={styles.dataTableContainer}>
 			{/* <div className="filterContainer">
 				<div className="filterInput">
 					<TextField
@@ -113,42 +121,52 @@ function DataTable() {
 					</div>
 				)}
 			</div> */}
-			<Paper elevation={3} className="tablePaper">
-				<TableContainer className="tableContainer">
+			<Paper elevation={3} className={styles.tablePaper}>
+				<TableContainer className={styles.tableContainer}>
 					<Table>
 						<TableHead>
 							<TableRow>
-								{[
-									...Object.keys(data[0]).filter(
-										(item) => item !== "coordinates"
-									),
-									"Action",
-								].map((item) => {
-									return (
-										<TableCell>
-											<div className="tableHeadCell">
-												{camelCaseToTitleCase(item)}
-											</div>
-										</TableCell>
-									);
-								})}
+								{["Name", ...Object.keys(data[0]?.data || {}), ""].map(
+									(item) => {
+										return (
+											<TableCell>
+												<div className="tableHeadCell">
+													{camelCaseToTitleCase(item)}
+												</div>
+											</TableCell>
+										);
+									}
+								)}
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{filteredData.map((item) => (
-								<TableRow key={item.id}>
-									{Object.keys(item)
-										.filter((item) => item !== "coordinates")
-										.map((key) => (
-											<TableCell>{item[key]}</TableCell>
+							{data.length > 0 ? (
+								data.map((item) => (
+									<TableRow key={item.id}>
+										<TableCell>{item.name}</TableCell>
+										{Object.keys(item.data).map((key) => (
+											<TableCell>{item.data[key]}</TableCell>
 										))}
-									<TableCell className="deleteButton">
-										<Button variant="contained" color="error">
-											Delete
-										</Button>
+										<TableCell className={styles.deleteButton}>
+											<Button
+												variant="contained"
+												color="error"
+												onClick={() => handleDelete(item.name)}
+											>
+												Delete
+											</Button>
+										</TableCell>
+									</TableRow>
+								))
+							) : (
+								<TableRow>
+									<TableCell colSpan={2}>
+										<Typography variant="h6" align="center">
+											No Data Available
+										</Typography>
 									</TableCell>
 								</TableRow>
-							))}
+							)}
 						</TableBody>
 					</Table>
 				</TableContainer>

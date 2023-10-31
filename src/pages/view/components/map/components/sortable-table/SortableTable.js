@@ -23,19 +23,9 @@ const columns = [
 ];
 
 function SortableTable({ parsedCategoryValues }) {
+
 	const [orderBy, setOrderBy] = useState("");
 	const [order, setOrder] = useState("asc");
-	const [page, setPage] = useState(0);
-	const [rowsPerPage, setRowsPerPage] = useState(10);
-	console.log(parsedCategoryValues);
-	const handleChangePage = (event, newPage) => {
-		setPage(newPage);
-	};
-
-	const handleChangeRowsPerPage = (event) => {
-		setRowsPerPage(event.target.value);
-		setPage(0);
-	};
 
 	const handleSort = (columnId) => {
 		if (orderBy === columnId) {
@@ -46,13 +36,8 @@ function SortableTable({ parsedCategoryValues }) {
 		}
 	};
 
-	// Calculate the start and end index for slicing the data based on page and rowsPerPage
-	const startIndex = page * rowsPerPage;
-	const endIndex = startIndex + rowsPerPage;
-	const slicedData = parsedCategoryValues.slice(startIndex, endIndex);
 
-	// Sort the sliced data
-	const sortedData = slicedData.sort((a, b) => {
+	const sortedData = parsedCategoryValues.sort((a, b) => {
 		const aValue = a[orderBy];
 		const bValue = b[orderBy];
 
@@ -65,7 +50,7 @@ function SortableTable({ parsedCategoryValues }) {
 
 	return (
 		<TableContainer component={Paper} sx={{ height: "100%" }}>
-			<Table stickyHeader>
+			<Table stickyHeader sx={{ height: "100%" }}>
 				<TableHead>
 					<TableRow>
 						{columns.map((column) => (
@@ -94,21 +79,6 @@ function SortableTable({ parsedCategoryValues }) {
 					))}
 				</TableBody>
 			</Table>
-			<TablePagination
-				sx={{
-					position: "sticky",
-					bottom: 0,
-					zIndex: 1, // Adjust the z-index as needed
-					background: "white", // Add a background color if needed
-				}}
-				rowsPerPageOptions={[10, 25, 100]}
-				component="div"
-				count={parsedCategoryValues.length} // Use the original data length
-				rowsPerPage={rowsPerPage}
-				page={page}
-				onPageChange={handleChangePage}
-				onRowsPerPageChange={handleChangeRowsPerPage}
-			/>
 		</TableContainer>
 	);
 }

@@ -35,7 +35,6 @@ function FilterableTable({ variables, setVariables }) {
 			)
 		);
     };
-    console.log(filteredData);
 	const handleClearFilter = () => {
 		setFilter("");
 		setFilteredData(variables);
@@ -74,7 +73,7 @@ function FilterableTable({ variables, setVariables }) {
 						{filteredData.map((item) => (
 							<TableRow>
 								<TableCell>{camelCaseToWords(item.name)}</TableCell>
-								<TableCell>
+								<TableCell sx={{width: '250px'}}>
 									<ToggleButton
 										variableName={item.name}
 										setVariables={setFilteredData}
@@ -88,7 +87,7 @@ function FilterableTable({ variables, setVariables }) {
 											variant="contained"
 											color="error"
 											className="filterable-delete-button"
-											sx={{ m: 1, width: "80px" }}
+											sx={{ m: 1}}
 											disabled={
 												!variables.filter(
 													(variable) => variable.name === item.name
@@ -111,7 +110,7 @@ function FilterableTable({ variables, setVariables }) {
 											variant="contained"
 											color="success"
 											className="filterable-delete-button"
-											sx={{ m: 1, width: "80px" }}
+											sx={{ m: 1 }}
 											disabled={
 												!variables.filter(
 													(variable) => variable.name === item.name

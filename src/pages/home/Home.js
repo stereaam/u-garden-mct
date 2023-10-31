@@ -10,8 +10,12 @@ import {
 import Header from "../../components/header/Header";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from 'react-redux';
+import { updateJsonData } from '../../redux/actions/actions';
+
+import styles from './Home.module.scss'
 function Home() {
-	const [jsonData, setJsonData] = useState({});
+	const dispatch = useDispatch();
 	const { t, i18n } = useTranslation();
 	const changeLanguage = (language) => {
 		i18n.changeLanguage(language);
@@ -24,8 +28,7 @@ function Home() {
 			reader.onload = (event) => {
 				try {
 					const parsedData = JSON.parse(event.target.result);
-					console.log(parsedData);
-					setJsonData(parsedData);
+					dispatch(updateJsonData(parsedData));
 				} catch (error) {
 					alert("Invalid JSON file");
 				}
@@ -37,10 +40,9 @@ function Home() {
 	return (
 		<div>
 			<Header />
-			<div className="home-content">
+			<div className={styles.homeContent}>
 				<div>
-					<h1>{t('settings')}</h1>
-					<FormControl variant="filled" sx={{ m: 2, minWidth: 120 }}>
+					<FormControl variant="filled">
 						<InputLabel id="demo-simple-select-standard-label">
 							{t("language")}
 						</InputLabel>
@@ -71,7 +73,7 @@ function Home() {
 							variant="contained"
 							component="span"
 							startIcon={<CloudUploadIcon />}
-							sx={{ width: "260px" }}
+							className={styles.importButton}
 						>
 							{t("importSpatialData")}
 						</Button>
