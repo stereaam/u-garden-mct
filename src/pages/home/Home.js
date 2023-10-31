@@ -29,6 +29,7 @@ function Home() {
 				try {
 					const parsedData = JSON.parse(event.target.result);
 					dispatch(updateJsonData(parsedData));
+					alert("JSON file imported successfuly");
 				} catch (error) {
 					alert("Invalid JSON file");
 				}
