@@ -13,7 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import styles from "./DataTable.module.scss";
 import { useDispatch } from "react-redux";
-import { updateJsonData } from '../../../../redux/actions/actions';
+import { updateJsonData } from "../../../../redux/actions/actions";
 
 function camelCaseToTitleCase(camelCase) {
 	const withSpaces = camelCase.replace(/([A-Z])/g, " $1").trim();
@@ -123,7 +123,7 @@ function DataTable() {
 			</div> */}
 			<Paper elevation={3} className={styles.tablePaper}>
 				<TableContainer className={styles.tableContainer}>
-					<Table>
+					<Table stickyHeader>
 						<TableHead>
 							<TableRow>
 								{["Name", ...Object.keys(data[0]?.data || {}), ""].map(

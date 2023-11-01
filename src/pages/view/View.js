@@ -103,34 +103,25 @@ function View() {
 	const [categoryItems, setCategoryItems] = useState(
 		useSelector((state) => state.categoryItems)
 	);
-
+	console.log(categoryItems);
 	const [categoryValues, setCategoryValues] = useState([]);
-	// const [parsedCategoryValues, setParsedCategoryValues] = useState([]);
-	// const [parsedData, setParsedData] = useState(jsonData);
 
 	const [selectedOption, setSelectedOption] = useState("map");
-	// useEffect(() => {
-	// 	setParsedData(
-	//
-	// 	);
-	// 	setParsedCategoryValues(
 
-	// 	);
-	// }, [categoryValues, jsonData, sliderValues]);
 	useEffect(() => {
 		const minMaxValues = findMinMaxValues(jsonData.map((item) => item.data));
 		const normalizedCategoryValues = [];
 		jsonData.forEach((item) => {
 			const categoryData = {};
 			Object.entries(categoryItems).forEach(([key, values]) => {
+				console.log("fnjsn", values);
 				categoryData[key] = aritmethicMean(
 					values.map((value) => {
-						console.log(value);
 						const normalizedValue = calculateNormalizedValue(
 							item.data[value.name],
 							minMaxValues[value.name]
-						)
-						return value.inverted? 1 - normalizedValue: normalizedValue;
+						);
+						return value.inverted ? 1 - normalizedValue : normalizedValue;
 					})
 				);
 			});

@@ -4,7 +4,10 @@ import { Box, List, ListItem, ListItemText, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import styles from "./VariablesAssigner.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { updateCategoryItems } from "../../../../redux/actions/actions";
+import {
+	updateCategoryItems,
+	updateVariables,
+} from "../../../../redux/actions/actions";
 function camelCaseToWords(camelCaseString) {
 	const words = camelCaseString.split(/(?=[A-Z])/);
 
@@ -94,9 +97,14 @@ const DropBox = ({
 	);
 };
 
-const VariablesAssigner = ({ variables, setVariables, categoryItems, setCategoryItems }) => {
+const VariablesAssigner = ({
+	variables,
+	setVariables,
+	categoryItems,
+	setCategoryItems,
+}) => {
 	const dispatch = useDispatch();
-	
+
 	const handleDrop = (boxTitle, droppedItem) => {
 		setVariables(
 			variables.map((item) =>
@@ -111,6 +119,10 @@ const VariablesAssigner = ({ variables, setVariables, categoryItems, setCategory
 	useEffect(() => {
 		dispatch(updateCategoryItems(categoryItems));
 	}, [categoryItems, dispatch]);
+
+	useEffect(() => {
+		dispatch(updateVariables(variables));
+	}, [variables, dispatch]);
 
 	return (
 		<div>

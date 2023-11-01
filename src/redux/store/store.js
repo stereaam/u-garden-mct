@@ -107,6 +107,7 @@ const initialState = {
 		politic: [],
 		social: [],
 	},
+	variables: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -120,6 +121,11 @@ const rootReducer = (state = initialState, action) => {
 			return {
 				...state,
 				categoryItems: action.payload,
+			};
+		case "UPDATE_VARIABLES":
+			return {
+				...state,
+				variables: action.payload,
 			};
 		default:
 			return state;

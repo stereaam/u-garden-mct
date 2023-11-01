@@ -27,7 +27,7 @@ function Menu({
 	});
 	return (
 		<div className="menu">
-			<FormControl sx={{ width: "100%", padding: '20px' }}>
+			<FormControl sx={{ width: "100%", padding: "20px" }}>
 				{selectedOption === "map" && (
 					<div>
 						<FormLabel id="demo-radio-buttons-group-label">Map Type</FormLabel>
@@ -38,48 +38,25 @@ function Menu({
 								setMapProvider(e.target.value);
 							}}
 						>
-							<div className="radio-row">
-								<FormControlLabel
-									value="openstreetmap"
-									control={<Radio />}
-									label="Normal"
-									checked={mapProvider === "openstreetmap"}
-								/>
-								<FormControlLabel
-									value="stamen_watercolor"
-									control={<Radio />}
-									label="Watercolor"
-									checked={mapProvider === "stamen_watercolor"}
-								/>
-							</div>
-							<div className="radio-row">
-								<FormControlLabel
-									value="stamen_toner"
-									control={<Radio />}
-									label="Toner"
-									checked={mapProvider === "stamen_toner"}
-								/>
-								<FormControlLabel
-									value="stamen_terrain"
-									control={<Radio />}
-									label="Terrain"
-									checked={mapProvider === "stamen_terrain"}
-								/>
-							</div>
-							<div className="radio-row">
-								<FormControlLabel
-									value="cartodb_dark"
-									control={<Radio />}
-									label="Dark"
-									checked={mapProvider === "cartodb_dark"}
-								/>
-								<FormControlLabel
-									value="cartodb_light"
-									control={<Radio />}
-									label="Light"
-									checked={mapProvider === "cartodb_light"}
-								/>
-							</div>
+							<FormControlLabel
+								value="openstreetmap"
+								control={<Radio />}
+								label="Normal"
+								checked={mapProvider === "openstreetmap"}
+							/>
+
+							<FormControlLabel
+								value="cartodb_dark"
+								control={<Radio />}
+								label="Dark"
+								checked={mapProvider === "cartodb_dark"}
+							/>
+							<FormControlLabel
+								value="cartodb_light"
+								control={<Radio />}
+								label="Light"
+								checked={mapProvider === "cartodb_light"}
+							/>
 						</RadioGroup>
 					</div>
 				)}
@@ -161,7 +138,6 @@ function Menu({
 						variant="contained"
 						color="primary"
 						onClick={() => {
-							console.log(ref.current);
 							setSliderValues(ref.current);
 						}}
 						sx={{ width: "100%", marginTop: "50px" }}

@@ -10,10 +10,14 @@ import {
 import Header from "../../components/header/Header";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from 'react-redux';
-import { updateJsonData } from '../../redux/actions/actions';
+import { useDispatch } from "react-redux";
+import {
+	updateCategoryItems,
+	updateJsonData,
+	updateVariables,
+} from "../../redux/actions/actions";
 
-import styles from './Home.module.scss'
+import styles from "./Home.module.scss";
 function Home() {
 	const dispatch = useDispatch();
 	const { t, i18n } = useTranslation();
@@ -28,7 +32,24 @@ function Home() {
 			reader.onload = (event) => {
 				try {
 					const parsedData = JSON.parse(event.target.result);
+					const variables = Object.keys(parsedData[0].data).map((name) => ({
+						name,
+						inverted: false,
+						available: true,
+						deleted: false,
+					}));
+					dispatch(updateVariables(variables));
 					dispatch(updateJsonData(parsedData));
+					dispatch(
+						updateCategoryItems({
+							urban: [],
+							spatial: [],
+							environmental: [],
+							economic: [],
+							politic: [],
+							social: [],
+						})
+					);
 					alert("JSON file imported successfuly");
 				} catch (error) {
 					alert("Invalid JSON file");

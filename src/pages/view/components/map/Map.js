@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, Popup, useMap, Polygon } from "react-leaflet";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from './Map.module.scss'
 import "leaflet/dist/leaflet.css";
 
@@ -20,21 +20,12 @@ export default function Map({
 }) {
 	const MAP_PROVIDERS_LEGEND = {
 		OPEN_STREET_MAP: "openstreetmap",
-		STAMEN_WATERCOLOR: "stamen_watercolor",
-		STAMEN_TERRAIN: "stamen_terrain",
-		STAMEN_TONER: "stamen_toner",
 		CARTODB_LIGHT: "cartodb_light",
 		CARTODB_DARK: "cartodb_dark",
 	};
 	const MAP_PROVIDERS = {
 		[MAP_PROVIDERS_LEGEND.OPEN_STREET_MAP]:
 			"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-		[MAP_PROVIDERS_LEGEND.STAMEN_WATERCOLOR]:
-			"http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg",
-		[MAP_PROVIDERS_LEGEND.STAMEN_TERRAIN]:
-			"http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg",
-		[MAP_PROVIDERS_LEGEND.STAMEN_TONER]:
-			"http://tile.stamen.com/toner/{z}/{x}/{y}.jpg",
 		[MAP_PROVIDERS_LEGEND.CARTODB_LIGHT]:
 			"https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
 		[MAP_PROVIDERS_LEGEND.CARTODB_DARK]:

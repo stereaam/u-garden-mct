@@ -7,22 +7,22 @@ import { useSelector } from "react-redux";
 import styles from "./Tools.module.scss";
 
 function Tools() {
-	const jsonData = useSelector((state) => state.jsonData)[0]?.data || {};
+	// const jsonData = useSelector((state) => state.jsonData)[0]?.data || {};
 	const initialCategoryItems = useSelector((state) => state.categoryItems);
 	const [categoryItems, setCategoryItems] = useState(initialCategoryItems);
 
-	const variableNames = Object.keys(jsonData);
-	const initialVariables =
-		variableNames.length > 0
-			? variableNames.map((name) => ({
-					name,
-					inverted: false,
-					available: true,
-					deleted: false,
-			  }))
-			: [];
+	// const variableNames = Object.keys(jsonData);
+	// const initialVariables =
+	// 	variableNames.length > 0
+	// 		? variableNames.map((name) => ({
+	// 				name,
+	// 				inverted: false,
+	// 				available: true,
+	// 				deleted: false,
+	// 		  }))
+	// 		: [];
+	const initialVariables = useSelector((state) => state.variables);
 	const [variables, setVariables] = useState(initialVariables);
-	
 	return (
 		<div>
 			<Header />

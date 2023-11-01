@@ -34,7 +34,7 @@ function FilterableTable({ variables, setVariables }) {
 				item.name.toLowerCase().includes(event.target.value.toLowerCase())
 			)
 		);
-    };
+	};
 	const handleClearFilter = () => {
 		setFilter("");
 		setFilteredData(variables);
@@ -42,7 +42,7 @@ function FilterableTable({ variables, setVariables }) {
 
 	return (
 		<div className="filterable-container">
-			<div className="filterable-controls">
+			{/* <div className="filterable-controls">
 				<TextField
 					label="Filter by Name"
 					value={filter}
@@ -56,9 +56,9 @@ function FilterableTable({ variables, setVariables }) {
 				>
 					Clear Filter
 				</Button>
-			</div>
+			</div> */}
 			<TableContainer className="filterable-table-container" component={Paper}>
-				<Table>
+				<Table stickyHeader>
 					<TableHead>
 						<TableRow>
 							<TableCell className="filterable-table-head">
@@ -73,7 +73,7 @@ function FilterableTable({ variables, setVariables }) {
 						{filteredData.map((item) => (
 							<TableRow>
 								<TableCell>{camelCaseToWords(item.name)}</TableCell>
-								<TableCell sx={{width: '250px'}}>
+								<TableCell sx={{ width: "250px" }}>
 									<ToggleButton
 										variableName={item.name}
 										variables={variables}
@@ -88,7 +88,7 @@ function FilterableTable({ variables, setVariables }) {
 											variant="contained"
 											color="error"
 											className="filterable-delete-button"
-											sx={{ m: 1}}
+											sx={{ m: 1 }}
 											disabled={
 												!variables.filter(
 													(variable) => variable.name === item.name
