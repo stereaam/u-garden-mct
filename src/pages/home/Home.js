@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Header from "../../components/header/Header";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import {
@@ -16,6 +17,7 @@ import {
 	updateJsonData,
 	updateVariables,
 } from "../../redux/actions/actions";
+import exampleData from "./exampleData.json";
 
 import styles from "./Home.module.scss";
 function Home() {
@@ -24,7 +26,17 @@ function Home() {
 	const changeLanguage = (language) => {
 		i18n.changeLanguage(language);
 	};
-
+	const handleDownload = () => {
+		const jsonBlob = new Blob([JSON.stringify(exampleData)], {
+			type: "application/json",
+		});
+		const url = window.URL.createObjectURL(jsonBlob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = "data.json";
+		a.click();
+		window.URL.revokeObjectURL(url);
+	};
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
 		if (file) {
@@ -100,6 +112,15 @@ function Home() {
 							{t("importSpatialData")}
 						</Button>
 					</label>
+					<Button
+						variant="outlined"
+						color="secondary"
+						startIcon={<CloudDownloadIcon />}
+						className={styles.importButton}
+						onClick={handleDownload}
+					>
+						Download example JSON
+					</Button>
 					{/* <Input
 						type="file"
 						accept=".json"

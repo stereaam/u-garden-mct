@@ -1,0 +1,81 @@
+[
+    {
+        "name": "Titan Park",
+        "data": {
+            "size": 560000,
+            "soilQuality": 30,
+            "elderPeoplePercentage": 23,
+            "employedPeoplePercentage": 39,
+            "budget": 150333,
+            "plantSpecies": 9,
+            "interestedResidentsPercentage": 75,
+            "shapeIndex": 14
+        },
+        "coordinates": [
+            ["44.416791", "26.156127"],
+            ["44.41964506566907", "26.147857657091734"],
+            ["44.42315692826376", "26.15085068640847"],
+            ["44.423974878373016", "26.156913097928957"],
+			["44.42065938311134", "26.161646970904645"]
+        ]
+    },
+    {
+        "name": "Vacaresti Park",
+        "data": {
+            "size": 720000,
+            "soilQuality": 80,
+            "elderPeoplePercentage": 32,
+            "employedPeoplePercentage": 89,
+            "budget": 1500000,
+            "plantSpecies": 12,
+            "interestedResidentsPercentage": 90,
+            "shapeIndex": 14
+        },
+        "coordinates": [
+            ["44.39236697224609", "26.134679189195104"],
+            ["44.39529298523116", "26.12525648322212"],
+            ["44.40671247466093", "26.125916953266955"],
+            ["44.40284331055514", "26.140799544943917"],
+			["44.39557614001407", "26.141636140334036"]
+        ]
+    },
+    {
+        "name": "Carol Park",
+        "data": {
+            "size": 360000,
+            "soilQuality": 30,
+            "elderPeoplePercentage": 34,
+            "employedPeoplePercentage": 89,
+            "budget": 8999990,
+            "plantSpecies": 45,
+            "interestedResidentsPercentage": 58,
+            "shapeIndex": 40
+        },
+        "coordinates": [
+            ["44.41027129721656", "26.09823168424912"],
+			["44.40987582787627", "26.09468859624736"],
+            ["44.4131713240068", "26.091809837245926"],
+            ["44.419129109639066", "26.094319524580506"],
+            ["44.41058767076353", "26.09944962074973"]
+        ]
+    },
+    {
+        "name": "Izvor Park",
+        "data": {
+            "size": 20000,
+            "soilQuality": 30,
+            "elderPeoplePercentage": 27,
+            "employedPeoplePercentage": 44,
+            "budget": 566666,
+            "plantSpecies": 25,
+            "interestedResidentsPercentage": 90,
+            "shapeIndex": 17
+        },
+        "coordinates": [
+            ["44.43285801802182", "26.091120432845948"],
+            ["44.43011710134501", "26.090714454012414"],
+            ["44.43082869783624", "26.08403425684242"],
+            ["44.43354322710611", "26.084255699842526"]
+        ]
+    }
+]

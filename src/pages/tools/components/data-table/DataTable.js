@@ -126,17 +126,19 @@ function DataTable() {
 					<Table stickyHeader>
 						<TableHead>
 							<TableRow>
-								{["Name", ...Object.keys(data[0]?.data || {}), ""].map(
-									(item) => {
-										return (
-											<TableCell>
-												<div className="tableHeadCell">
-													{camelCaseToTitleCase(item)}
-												</div>
-											</TableCell>
-										);
-									}
-								)}
+								{[
+									data.length > 0 ? "Name" : "",
+									...Object.keys(data[0]?.data || {}),
+									"",
+								].map((item) => {
+									return (
+										<TableCell>
+											<div className="tableHeadCell">
+												<strong>{camelCaseToTitleCase(item)}</strong>
+											</div>
+										</TableCell>
+									);
+								})}
 							</TableRow>
 						</TableHead>
 						<TableBody>
