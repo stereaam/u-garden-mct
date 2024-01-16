@@ -2,9 +2,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
-	jsonData: [
-		
-	],
+	jsonData: [],
 	categoryItems: {
 		urban: [],
 		spatial: [],

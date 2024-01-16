@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
-import store from "./redux/store/store"; // Import your Redux store
+import store from "./redux/store/store";
 import CssBaseline from "@mui/material/CssBaseline";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";

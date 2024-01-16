@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
 	Button,
 	Select,
@@ -18,14 +18,16 @@ import {
 	updateVariables,
 } from "../../redux/actions/actions";
 import exampleData from "./exampleData.json";
-
 import styles from "./Home.module.scss";
+
 function Home() {
-	const dispatch = useDispatch();
 	const { t, i18n } = useTranslation();
 	const changeLanguage = (language) => {
 		i18n.changeLanguage(language);
 	};
+
+	const dispatch = useDispatch();
+
 	const handleDownload = () => {
 		const jsonBlob = new Blob([JSON.stringify(exampleData)], {
 			type: "application/json",
@@ -37,12 +39,14 @@ function Home() {
 		a.click();
 		window.URL.revokeObjectURL(url);
 	};
+
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
 		if (file) {
 			const reader = new FileReader();
 			reader.onload = (event) => {
 				try {
+					console.log(event.target.result);
 					const parsedData = JSON.parse(event.target.result);
 					const variables = Object.keys(parsedData[0].data).map((name) => ({
 						name,
@@ -76,13 +80,9 @@ function Home() {
 			<Header />
 			<div className={styles.homeContent}>
 				<div>
-					<FormControl variant="filled">
-						<InputLabel id="demo-simple-select-standard-label">
-							{t("language")}
-						</InputLabel>
+					<FormControl>
+						<InputLabel>{t("language")}</InputLabel>
 						<Select
-							labelId="demo-simple-select-label"
-							id="demo-simple-select"
 							value={i18n.language}
 							label="Language"
 							onChange={(e) => {
@@ -94,14 +94,6 @@ function Home() {
 							<MenuItem value={"fr"}>French</MenuItem>
 						</Select>
 					</FormControl>
-
-					<Input
-						type="file"
-						accept=".json"
-						id="jsonFileInput"
-						style={{ display: "none" }}
-						onChange={handleFileChange}
-					/>
 					<label htmlFor="jsonFileInput">
 						<Button
 							variant="contained"
@@ -112,6 +104,13 @@ function Home() {
 							{t("importSpatialData")}
 						</Button>
 					</label>
+					<Input
+						type="file"
+						accept=".json"
+						id="jsonFileInput"
+						className={styles.jsonFileInput}
+						onChange={handleFileChange}
+					/>
 					<Button
 						variant="outlined"
 						color="secondary"
@@ -121,23 +120,6 @@ function Home() {
 					>
 						Download example JSON
 					</Button>
-					{/* <Input
-						type="file"
-						accept=".json"
-						id="jsonFileInput2"
-						style={{ display: "none" }}
-						onChange={handleFileChange}
-					/>
-					<label htmlFor="jsonFileInput2">
-						<Button
-							variant="contained"
-							component="span"
-							startIcon={<CloudUploadIcon />}
-							sx={{ width: "260px" }}
-						>
-							{t("importNonSpatialData")}
-						</Button>
-					</label> */}
 				</div>
 			</div>
 		</div>
