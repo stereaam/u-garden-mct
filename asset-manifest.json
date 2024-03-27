@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/u-garden-mct/static/css/main.f20fea98.css",
-    "main.js": "/u-garden-mct/static/js/main.245c46e4.js",
+    "main.css": "/u-garden-mct/static/css/main.329a99a0.css",
+    "main.js": "/u-garden-mct/static/js/main.f0bd838b.js",
     "static/js/787.349b0e60.chunk.js": "/u-garden-mct/static/js/787.349b0e60.chunk.js",
+    "static/media/u-garden.PNG": "/u-garden-mct/static/media/u-garden.0d9a5795d5c9d1fc8c26.PNG",
     "index.html": "/u-garden-mct/index.html",
-    "main.f20fea98.css.map": "/u-garden-mct/static/css/main.f20fea98.css.map",
-    "main.245c46e4.js.map": "/u-garden-mct/static/js/main.245c46e4.js.map",
+    "main.329a99a0.css.map": "/u-garden-mct/static/css/main.329a99a0.css.map",
+    "main.f0bd838b.js.map": "/u-garden-mct/static/js/main.f0bd838b.js.map",
     "787.349b0e60.chunk.js.map": "/u-garden-mct/static/js/787.349b0e60.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f20fea98.css",
-    "static/js/main.245c46e4.js"
+    "static/css/main.329a99a0.css",
+    "static/js/main.f0bd838b.js"
   ]
 }
