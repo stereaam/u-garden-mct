@@ -3,11 +3,13 @@ import { useDrag, useDrop } from "react-dnd";
 import { Box, List, ListItem, ListItemText, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import styles from "./VariablesAssigner.module.scss";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import {
 	updateCategoryItems,
 	updateVariables,
 } from "../../../../redux/actions/actions";
+import { t } from "i18next";
 function camelCaseToWords(camelCaseString) {
 	const words = camelCaseString.split(/(?=[A-Z])/);
 
@@ -51,10 +53,9 @@ const DropBox = ({
 		accept,
 		drop: (item) => onDrop(item),
 	});
-
 	return (
 		<div className={styles.dropBoxWrapper}>
-			<h3>{camelCaseToWords(title)}</h3>
+			<h3>{t(title)}</h3>
 			<Box className={styles.dropBox} ref={ref}>
 				<List>
 					{items.map((item, index) => (
@@ -104,7 +105,7 @@ const VariablesAssigner = ({
 	setCategoryItems,
 }) => {
 	const dispatch = useDispatch();
-
+	const { t } = useTranslation();
 	const handleDrop = (boxTitle, droppedItem) => {
 		setVariables(
 			variables.map((item) =>
@@ -127,7 +128,7 @@ const VariablesAssigner = ({
 	return (
 		<div>
 			<div style={{ minHeight: "200px" }}>
-				<h1>Variables</h1>
+				<h1>{t("variables")}</h1>
 				<div className={styles.draggablesWrapper}>
 					{variables.map(
 						(item) =>

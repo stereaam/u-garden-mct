@@ -18,3 +18,10 @@ export const updateVariables = (data) => {
 		payload: data,
 	};
 };
+
+export const updateSliderValues = (data) => {
+	return {
+		type: "UPDATE_SLIDER_VALUES",
+		payload: data,
+	};
+};

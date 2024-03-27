@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
 import Map from "./components/map/Map";
-import Menu from "./components/side-menu/Menu";
+import SideMenu from "./components/side-menu/SideMenu";
 import Header from "../../components/header/Header";
 import { useSelector } from "react-redux";
-import SortableTable from "./components/map/components/sortable-table/SortableTable";
+import ScoreTable from "./components/score-table/ScoreTable";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import GradientLegend from "./components/map/components/gradient-legened/GradientLegend";
 import styles from "./View.module.scss";
 import { useDispatch } from "react-redux";
 import { updateJsonData } from "../../redux/actions/actions";
+import { useTranslation } from "react-i18next";
+
+const VIEW_TYPE = {
+	MAP: "map",
+	TABLE: "table",
+};
 
 const getTotalValue = (values, sliderValues) => {
 	let total = 0;
 	Object.keys(values).forEach((key) => {
 		if (key !== "name") {
-			total = total + values[key] * sliderValues[key];
+			total = total + parseFloat(values[key]) * sliderValues[key];
 		}
 	});
 	return total
@@ -26,114 +32,112 @@ const getTotalValue = (values, sliderValues) => {
 		: 0;
 };
 
-function createObjectFromArray(array) {
-	const resultObject = {};
-
-	for (let i = 0; i < array.length; i++) {
-		const subObject = array[i];
-		const subKey = Object.keys(subObject)[0];
-		const subValue = subObject[subKey];
-		resultObject[subKey] = subValue;
-	}
-
-	return resultObject;
-}
-
-function aritmethicMean(arr) {
+function getAritmethicMean(arr) {
 	if (arr.length === 0) {
 		return 0;
 	}
-
 	const sum = arr.reduce(
 		(accumulator, currentValue) => accumulator + currentValue,
 		0
 	);
-	const mean = sum / arr.length;
-
-	return mean;
+	return sum / arr.length;
 }
 
-const calculateNormalizedValue = (value, minMax) => {
-	if (minMax[0] === minMax[1]) {
-		return 1;
-	}
-	return (value - minMax[0]) / (minMax[1] - minMax[0]);
-};
+const getNormalizedValue = (value, min, max) =>
+	min === max ? 1 : (value - min) / (max - min);
 
-function findMinMaxValues(data) {
+const getMinMaxValues = (data) => {
 	const minMaxValues = {};
-	for (const prop in data[0]) {
-		if (prop !== "coordinates") {
-			minMaxValues[prop] = [data[0][prop], data[0][prop]];
-		}
-	}
-
-	for (const item of data) {
-		for (const prop in item) {
-			if (prop !== "coordinates") {
-				const value = item[prop];
-				const [min, max] = minMaxValues[prop];
-				if (value < min) {
-					minMaxValues[prop][0] = value;
-				}
-				if (value > max) {
-					minMaxValues[prop][1] = value;
-				}
-			}
-		}
-	}
-
+	data.forEach((item) => {
+		Object.keys(item).forEach((key) => {
+			const currentValue = item[key];
+			minMaxValues[key] = {
+				min: Math.min(currentValue, minMaxValues[key]?.min || currentValue),
+				max: Math.max(currentValue, minMaxValues[key]?.max || currentValue),
+			};
+		});
+	});
 	return minMaxValues;
+};
+function calculateCenter(coordinates) {
+	if (coordinates.length === 0) {
+		return null;
+	}
+	let sumX = 0;
+	let sumY = 0;
+	for (let i = 0; i < coordinates.length; i++) {
+		sumX += parseFloat(coordinates[i][0]);
+		sumY += parseFloat(coordinates[i][1]);
+	}
+	const centerX = sumX / coordinates.length;
+	const centerY = sumY / coordinates.length;
+	return [centerX, centerY];
 }
+const normalizeCategoryValues = (jsonData, categoryItems) => {
+	const minMaxValues = getMinMaxValues(jsonData.map((item) => item.data));
+	const normalizedCategoryValues = [];
+	jsonData.forEach((item) => {
+		const categoryData = {};
+		Object.entries(categoryItems).forEach(([key, values]) => {
+			categoryData[key] = getAritmethicMean(
+				values.map((value) => {
+					const normalizedValue = getNormalizedValue(
+						item.data[value.name],
+						minMaxValues[value.name].min,
+						minMaxValues[value.name].max
+					);
+					return value.inverted ? 1 - normalizedValue : normalizedValue;
+				})
+			);
+		});
 
+		normalizedCategoryValues.push({ ...categoryData, name: item.name });
+	});
+	return normalizedCategoryValues;
+};
 function View() {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const [mapProvider, setMapProvider] = useState("openstreetmap");
 	const [jsonData, setJsonData] = useState(
 		useSelector((state) => state.jsonData)
 	);
-	const [sliderValues, setSliderValues] = useState({
-		urban: 0,
-		spatial: 0,
-		environmental: 0,
-		economic: 0,
-		politic: 0,
-		social: 0,
-	});
+	const [sliderValues, setSliderValues] = useState(
+		useSelector((state) => state.sliderValues)
+	);
 	const [categoryItems, setCategoryItems] = useState(
 		useSelector((state) => state.categoryItems)
 	);
-	console.log(categoryItems);
-	const [categoryValues, setCategoryValues] = useState([]);
+	const [plotsScore, setPlotsScore] = useState([]);
+	const [viewType, setViewType] = useState(VIEW_TYPE.MAP);
 
-	const [selectedOption, setSelectedOption] = useState("map");
+	const center = calculateCenter(
+		jsonData.map((item) => {
+			return calculateCenter(item.coordinates);
+		})
+	);
 
 	useEffect(() => {
-		const minMaxValues = findMinMaxValues(jsonData.map((item) => item.data));
-		const normalizedCategoryValues = [];
-		jsonData.forEach((item) => {
-			const categoryData = {};
-			Object.entries(categoryItems).forEach(([key, values]) => {
-				console.log("fnjsn", values);
-				categoryData[key] = aritmethicMean(
-					values.map((value) => {
-						const normalizedValue = calculateNormalizedValue(
-							item.data[value.name],
-							minMaxValues[value.name]
-						);
-						return value.inverted ? 1 - normalizedValue : normalizedValue;
-					})
-				);
+		const normalizedCategoryValues = normalizeCategoryValues(
+			jsonData,
+			categoryItems
+		).map((item) => {
+			Object.entries(item).forEach(([key, value]) => {
+				if (key !== "name") {
+					item[key] = value.toFixed(4);
+				}
 			});
-
-			normalizedCategoryValues.push({ ...categoryData, name: item?.name });
+			return item;
 		});
 
-		setCategoryValues(
+		setPlotsScore(
 			normalizedCategoryValues.map((item, index) => {
 				return {
 					...item,
-					total: getTotalValue(normalizedCategoryValues[index], sliderValues),
+					total: getTotalValue(
+						normalizedCategoryValues[index],
+						sliderValues
+					).toFixed(4),
 				};
 			})
 		);
@@ -150,52 +154,48 @@ function View() {
 		setJsonData(parsedData);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categoryItems, sliderValues]);
+
 	return (
 		<>
-			<div className="header">
+			<div className={styles.headerWrapper}>
 				<Header />
 			</div>
-			<div className="content">
-				<Menu
+			<div className={styles.viewContainer}>
+				<SideMenu
 					mapProvider={mapProvider}
 					setMapProvider={setMapProvider}
 					sliderValues={sliderValues}
 					setSliderValues={setSliderValues}
-					selectedOption={selectedOption}
+					viewType={viewType}
 				/>
-
 				<div className={styles.mapContainer}>
 					<div className={styles.innerWrapper}>
 						<ToggleButtonGroup
-							value={selectedOption}
+							value={viewType}
 							exclusive
-							onChange={(e) => setSelectedOption(e.target.value)}
-							aria-label="button group"
+							onChange={(e) => setViewType(e.target.value)}
 						>
-							<ToggleButton value="map" aria-label="map" color="primary">
-								Map
+							<ToggleButton value="map" color="primary">
+								{t("map")}
 							</ToggleButton>
-							<ToggleButton value="table" aria-label="table" color="primary">
-								Table
+							<ToggleButton value="table" color="primary">
+								{t("table")}
 							</ToggleButton>
 						</ToggleButtonGroup>
-						{selectedOption === "map" && (
-							<div className="gradient-wrapper">
-								<GradientLegend className="gradient" />
-							</div>
-						)}
+						{viewType === VIEW_TYPE.MAP && <GradientLegend />}
 					</div>
-					{selectedOption === "map" ? (
+					{viewType === VIEW_TYPE.MAP ? (
 						<Map
-							coords={{ latitude: 44.4268, longitude: 26.1025 }}
+							coords={{
+								latitude: center ? center[0] : 0,
+								longitude: center ? center[1] : 0,
+							}}
 							mapProvider={mapProvider}
-							categoryValues={categoryValues}
 							jsonData={jsonData}
-							parsedData={[]}
-							sliderValues={sliderValues}
+							plotsScore={plotsScore}
 						/>
 					) : (
-						<SortableTable parsedCategoryValues={categoryValues} />
+						<ScoreTable plotsScore={plotsScore} />
 					)}
 				</div>
 			</div>

@@ -1,32 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 
-function ToggleButton({ variableName, variables, setVariables }) {
+function ToggleButton({
+	variableName,
+	variables,
+	setVariables,
+	camelCaseToWords,
+}) {
 	const [isActive, setIsActive] = useState(
-		variables.filter((variable) => variable.name === variableName)[0].inverted
+		variables.filter(
+			(variable) => camelCaseToWords(variable.name) === variableName
+		)[0].inverted
 	);
 
 	const handleToggle = () => {
-		setIsActive(!isActive);
-	};
-
-	useEffect(() => {
-		const parsedVariables = variables.map((item) => {
-			return item.name === variableName
-				? { ...item, inverted: isActive }
-				: item;
+		const parsedVariables = variables.map((variable) => {
+			return camelCaseToWords(variable.name) === variableName
+				? { ...variable, inverted: !isActive }
+				: variable;
 		});
 		setVariables(parsedVariables);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isActive]);
+		setIsActive((prev) => !prev);
+	};
+
 	return (
 		<Button
 			variant={isActive ? "contained" : "outlined"}
 			color={"primary"}
 			onClick={handleToggle}
 			disabled={
-				!variables.filter((variable) => variable.name === variableName)[0]
-					.available
+				!variables.filter(
+					(variable) => camelCaseToWords(variable.name) === variableName
+				)[0].available
 			}
 		>
 			Invert

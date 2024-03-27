@@ -1,37 +1,24 @@
 import React from "react";
-import "./GradientLegend.css";
+import styles from "./GradientLegend.module.scss";
+import { useTranslation } from "react-i18next";
 
-function GradientLegend() {
-	const numStops = 10;
+const ticks = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 
-	// Create an array of gradient stops with labels
-	const gradientStops = Array.from({ length: numStops }, (_, index) => {
-		const value = (index / (numStops - 1)).toFixed(1); // Calculate the value from 0 to 1
-		return { label: value };
-	});
-
-	// Define a CSS style with a horizontal linear gradient background
-	const gradientStyle = {
-		background: `linear-gradient(to right, red, orange, yellow, green)`,
-		width: "100%", // Set the width to 100% for a horizontal gradient
-		height: "20px", // Adjust the height as needed
-	};
-
+const GradientLegend = () => {
+	const { t } = useTranslation();
 	return (
 		<div>
-			<strong>Total Score</strong>
-			<div className="gradient-legend" style={gradientStyle}>
-				<div className="gradient-colors"></div>
-				<div className="gradient-labels">
-					{gradientStops.map((stop, index) => (
-						<div key={index} className="gradient-label">
-							{stop.label}
-						</div>
+			<strong>{t("totalScore")}</strong>
+			<div className={styles.legend}>
+				<div className={styles.colors}></div>
+				<div className={styles.labelsWrapper}>
+					{ticks.map((value) => (
+						<div className={styles.label}>{value}</div>
 					))}
 				</div>
 			</div>
 		</div>
 	);
-}
+};
 
 export default GradientLegend;

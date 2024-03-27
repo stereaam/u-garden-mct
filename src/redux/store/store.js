@@ -12,6 +12,7 @@ const initialState = {
 		social: [],
 	},
 	variables: [],
+	sliderValues: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -30,6 +31,11 @@ const rootReducer = (state = initialState, action) => {
 			return {
 				...state,
 				variables: action.payload,
+			};
+		case "UPDATE_SLIDER_VALUES":
+			return {
+				...state,
+				sliderValues: action.payload,
 			};
 		default:
 			return state;

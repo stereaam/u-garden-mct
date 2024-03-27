@@ -6,7 +6,7 @@ import Tools from "./pages/tools/Tools";
 import Help from "./pages/help/Help";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "./App.css";
+import styles from "./App.module.scss";
 
 function App() {
 	const { t } = useTranslation();
@@ -14,7 +14,7 @@ function App() {
 	const toolsPath = `/u-garden-mct/${t("tools")}`;
 	const helpPath = `/u-garden-mct/${t("help")}`;
 	return (
-		<div className="App">
+		<div className={styles.appContainer}>
 			<Routes>
 				<Route path="/u-garden-mct/" exact element={<Home />} />
 				<Route path={viewPath} element={<View />} />
