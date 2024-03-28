@@ -73,7 +73,7 @@ function DataTable() {
 				getActions: (item) => {
 					return [
 						<GridActionsCellItem
-							icon={<DeleteIcon />}
+							icon={<DeleteIcon color="error" />}
 							label="Delete"
 							onClick={() => {
 								setIsModalOpen(true);

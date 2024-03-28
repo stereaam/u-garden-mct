@@ -51,7 +51,7 @@ export default function Map({
 			<MapView />
 			{jsonData.map((plot) => {
 				const plotScore = plotsScore.filter((item) => {
-					return item.total === plot.totalValue;
+					return parseFloat(item.total).toFixed(2) === plot.totalValue.toFixed(2);
 				})[0];
 				return (
 					<Polygon

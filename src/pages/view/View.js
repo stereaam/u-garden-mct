@@ -159,7 +159,15 @@ function View() {
 		<>
 			<div className={styles.headerWrapper}>
 				<Header />
+				{Object.values(categoryItems).every(
+					(category) => category.length === 0
+				) && (
+					<h4 style={{ color: "red", textAlign: 'center' }}>
+						You need to import data and group variables in Tools page first.
+					</h4>
+				)}
 			</div>
+
 			<div className={styles.viewContainer}>
 				<SideMenu
 					mapProvider={mapProvider}
